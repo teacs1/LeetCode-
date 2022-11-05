@@ -128,4 +128,35 @@ public class SolutionImpl implements Solution {
             return (double)(nums[length/2]);
         }
     }
+
+    /**
+     * 中心扩展寻找回文串
+     *  从字符串起始作为回文串中心，中心不断像末端移动，直到抵达边界，
+     *  移动都尝试像两边扩展，若两边相同则继续扩展，扩展达到边界停止
+     *      注意：目标串可能是奇串或者是偶串
+     */
+    @Override
+    public String longestPalindrome(String s) {
+        if(s == null || s.length() == 0){
+            return "";
+        }
+        int start = 0, end = 0;
+        for(int i = 0; i < s.length(); ++i){
+            int len1 = expendCenter(s, i, i);
+            int len2 = expendCenter(s, i, i+1);
+            int len = Math.max(len1, len2);
+            if(len > end - start){
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1); //裁剪末端这一位不算入
+    }
+    private int expendCenter(String s, int left, int right){
+        while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+            left--;
+            right++;
+        }
+        return right - left - 1;
+    }
 }

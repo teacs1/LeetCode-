@@ -16,7 +16,7 @@ public class Test100 {
     private Solution solution;
 
     /**
-     * 1.两数之和
+     * 1.两数之和Two Sum
      */
     @Test
     public void problem1(){
@@ -39,7 +39,7 @@ public class Test100 {
     }
 
     /**
-     * 2.两数相加
+     * 2.两数相加Add Two Numbers
      */
     @Test
     public void problem2(){
@@ -75,7 +75,7 @@ public class Test100 {
     }
 
     /**
-     * 3.无重复字符的最长子串
+     * 3.无重复字符的最长子串Longest Substring Without Repeating Characters
      */
     @Test
     public void problem3(){
@@ -96,7 +96,7 @@ public class Test100 {
     }
 
     /**
-     * 4. 寻找两个正序数组的中位数
+     * 4. 寻找两个正序数组的中位数Median of Two Sorted Arrays
      */
     @Test
     public void problem4(){
@@ -122,5 +122,31 @@ public class Test100 {
         nums2 = new int[]{3, 4};
         num = solution.findMedianSortedArrays(nums1, nums2);
         System.out.println("中位数4："+ num);
+    }
+
+    /**
+     *  5.最长回文子串Longest Palindromic Substring
+     */
+    @Test
+    public void problem5(){
+        //示例1
+        String s = "babad";
+        String longestPalindrome = solution.longestPalindrome(s);
+        System.out.println("最长回文子串：" + longestPalindrome);
+
+        //示例2
+        s = "cbbd";
+        longestPalindrome = solution.longestPalindrome(s);
+        System.out.println("最长回文子串：" + longestPalindrome);
+
+        //示例3
+        s = "asdzxxzcacdyxqwqxydcaadasda";
+        longestPalindrome = solution.longestPalindrome(s);
+        System.out.println("最长回文子串：" + longestPalindrome);
+
+        //示例4
+        s = "iwdfgnxaxaxngfdwiasdfa";
+        longestPalindrome = solution.longestPalindrome(s);
+        System.out.println("最长回文子串：" + longestPalindrome);
     }
 }
