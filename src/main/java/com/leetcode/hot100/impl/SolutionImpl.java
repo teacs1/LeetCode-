@@ -4,8 +4,7 @@ import com.leetcode.hot100.Solution;
 import com.leetcode.util.ListNode;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class SolutionImpl implements Solution {
@@ -158,5 +157,119 @@ public class SolutionImpl implements Solution {
             right++;
         }
         return right - left - 1;
+    }
+
+    /**
+     * 用双指针作为边界计算最大容积
+     * @param height
+     * @return
+     */
+    @Override
+    public int maxArea(int[] height) {
+        if (height == null) {
+            return 0;
+        }
+        int left = 0, len = height.length, right = len - 1;
+        int maxArea = 0;
+        while(left < right) {
+            int area = Math.min(height[left], height[right]) * (right - left);
+            maxArea = Math.max(area, maxArea);
+            if(height[left] < height[right]){
+                ++left;
+            }else {
+                --right;
+            }
+        }
+        return maxArea;
+    }
+
+    /**
+     * 1.特判，对于数组长度 n，如果数组为 null 或者数组长度小于 3，返回[]。
+     * 2.对数组进行排序。
+     * 3.遍历排序后数组：
+     *      若 nums[i]>0：因为已经排序好，所以后面不可能有三个数加和等于 00，直接返回结果。
+     *      对于重复元素：跳过，避免出现重复解
+     *      令左指针 L=i+1，右指针 R=n-1，当 L<R时，执行循环：
+     *          当 nums[i]+nums[L]+nums[R]==0，执行循环，判断左界和右界是否和下一位置重复，去除重复解。并同时将 L,R 移到下一位置，寻找新的解
+     *          若和大于0，说明 nums[R]太大，R 左移
+     *          若和小于0，说明 nums[L]太小，L 右移
+     */
+    @Override
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> lists = new ArrayList<List<Integer>>();
+        int len = nums.length;
+        for(int left = 0; left < len; ++left){
+            if(nums[left] > 0){
+                return lists;
+            }
+            if(left > 0 && nums[left - 1] == nums[left]){
+                continue;
+            }
+            int center = left + 1, right = len - 1;
+            while (center < right) {
+                int temp = nums[left] + nums[center] + nums[right];
+                if(temp == 0){
+                    List<Integer> integers = new ArrayList<>();
+                    integers.add(nums[left]);
+                    integers.add(nums[center]);
+                    integers.add(nums[right]);
+                    lists.add(integers);
+                    while(center < right && nums[center + 1] == nums[center]){
+                        ++center;
+                    }
+                    while(center < right && nums[right - 1] == nums[right]){
+                        --right;
+                    }
+                    ++center;
+                    --right;
+                }else if(temp < 0){
+                    ++center;
+                }else{
+                    --right;
+                }
+            }
+        }
+        return lists;
+    }
+
+    /**
+     *17. 电话号码的字母组合Letter Combinations of a Phone Number
+     * @param digits
+     * @return
+     */
+    @Override
+    public List<String> letterCombinations(String digits) {
+        List<String> combinations = new ArrayList<String>();
+        if (digits.length() == 0) {
+            return combinations;
+        }
+        Map<Character, String> phoneMap = new HashMap<>() {{
+            put('2', "abc");
+            put('3', "def");
+            put('4', "ghi");
+            put('5', "jkl");
+            put('6', "mno");
+            put('7', "pqrs");
+            put('8', "tuv");
+            put('9', "wxyz");
+        }};
+        backtrack(combinations, phoneMap, digits, 0, new StringBuffer());
+        return combinations;
+    }
+    private void backtrack(List<String> combinations, Map<Character, String> phoneMap,
+                           String digits, int index, StringBuffer combination){
+        if(index == digits.length()){
+            combinations.add(combination.toString());
+        }else {
+            char digit = digits.charAt(index);
+            String letters = phoneMap.get(digit);
+            int length = letters.length();
+            for(int i = 0; i < length; ++i){
+                combination.append(letters.charAt(i));
+                backtrack(combinations, phoneMap, digits, index + 1, combination);
+                combination.deleteCharAt(index);
+            }
+        }
     }
 }

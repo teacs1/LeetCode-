@@ -3,6 +3,8 @@ package com.leetcode.hot100;
 
 import com.leetcode.util.ListNode;
 
+import java.util.List;
+
 public interface Solution {
     /**
      * 题目1：两数之和
@@ -42,4 +44,21 @@ public interface Solution {
      */
     public String longestPalindrome(String s);
 
-    }
+    /**
+     * 11. 盛最多水的容器 Container With Most Water
+     * @param height
+     * @return
+     */
+    int maxArea(int[] height);
+
+    /**
+     *  15. 三数之和3Sum
+     */
+    public List<List<Integer>> threeSum(int[] nums);
+
+    /**
+     * 17. 电话号码的字母组合Letter Combinations of a Phone Number
+     */
+    public List<String> letterCombinations(String digits);
+
+}
