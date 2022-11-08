@@ -61,4 +61,25 @@ public interface Solution {
      */
     public List<String> letterCombinations(String digits);
 
+    /**
+     * 19. 删除链表的倒数第 N 个结点Remove Nth Node From End of List
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n);
+
+    /**
+     * 20. 有效的括号Valid Parentheses
+     */
+    public boolean isValid(String s);
+
+    /**
+     * 21. 合并两个有序链表Merge Two Sorted Lists
+     */
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2);
+
+    /**
+     *22. 括号生成 Generate Parentheses
+     */
+    public List<String> generateParenthesis(int n);
+
+
 }

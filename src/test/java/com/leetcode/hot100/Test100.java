@@ -217,4 +217,107 @@ public class Test100 {
         strings = solution.letterCombinations(digits);
         System.out.println("电话号码的字母组合==>" + strings);
     }
+
+    /**
+     * 19. 删除链表的倒数第 N 个结点Remove Nth Node From End of List
+     */
+    @Test
+    public void problem019(){
+        //示例1
+        ListNode head = new ListNode(1, new ListNode(2, new ListNode(3,
+                new ListNode(4, new ListNode(5)))));
+        int n = 2;
+        ListNode res = solution.removeNthFromEnd(head, n);
+        while(res != null){
+            System.out.print(res.val + "==>");
+            res = res.next;
+        }
+        System.out.println();
+        //示例2
+        head = new ListNode(1);
+        n = 1;
+        res = solution.removeNthFromEnd(head, n);
+        while(res != null){
+            System.out.print(res.val + "==>");
+            res = res.next;
+        }
+        System.out.println();
+        //示例3
+        head = new ListNode(1, new ListNode(2));
+        n = 1;
+        res = solution.removeNthFromEnd(head, n);
+        while(res != null){
+            System.out.print(res.val + "==>");
+            res = res.next;
+        }
+    }
+
+    /**
+     * 20. 有效的括号Valid Parentheses
+     */
+    @Test
+    public void problem020(){
+        //示例
+        String s = "()";
+        boolean res = solution.isValid(s);
+        System.out.println(res);
+        //示例
+        s = "()[]{}";
+        res = solution.isValid(s);
+        System.out.println(res);
+        //示例
+        s = "(]";
+        res = solution.isValid(s);
+        System.out.println(res);
+    }
+
+    /**
+     * 21. 合并两个有序链表Merge Two Sorted Lists
+     */
+    @Test
+    public void problem021(){
+        //示例1
+        ListNode l1 = new ListNode(1, new ListNode(2, new ListNode(4)));
+        ListNode l2 = new ListNode(1, new ListNode(3, new ListNode(4)));
+        ListNode listNode = solution.mergeTwoLists(l1, l2);
+        while(listNode != null){
+            System.out.print(listNode.val + "==>");
+            listNode = listNode.next;
+        }
+        System.out.println();
+        //示例2
+        l1 = null;
+        l2 = null;
+        listNode = solution.mergeTwoLists(l1, l2);
+        while(listNode != null){
+            System.out.print(listNode.val + "==>");
+            listNode = listNode.next;
+        }
+        System.out.println();
+        //示例3
+        l1 = null;
+        l2 = new ListNode(0);
+        listNode = solution.mergeTwoLists(l1, l2);
+        while(listNode != null){
+            System.out.print(listNode.val + "==>");
+            listNode = listNode.next;
+        }
+        System.out.println();
+    }
+
+    /**
+     *22. 括号生成 Generate Parentheses
+     */
+    @Test
+    public void problem022(){
+        //示例1
+        int n = 3;
+        List<String> strings = solution.generateParenthesis(n);
+        System.out.println("[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]" + "<==>" + strings);
+
+        //示例2
+        n = 1;
+        strings = solution.generateParenthesis(n);
+        System.out.println("[\"()\"]" + "<==>" + strings);
+    }
 }

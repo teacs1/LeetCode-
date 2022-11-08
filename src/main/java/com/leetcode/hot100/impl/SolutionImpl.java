@@ -272,4 +272,101 @@ public class SolutionImpl implements Solution {
             }
         }
     }
+
+    /**
+     * 19. 删除链表的倒数第 N 个结点Remove Nth Node From End of List
+     * 分析，删除倒数第n个节点，主要问题是不知道有多少个节点
+     *      遍历一遍获得节点数量，以便找到要删除的节点
+     */
+    @Override
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode tail = head;
+        int len = 0;
+        while(tail != null){
+            tail = tail.next;
+            len++;
+        }
+        if(len == n){
+            head = head.next;
+            return head;
+        }
+        tail = head;
+        int index = len - n;
+        while(index > 0){
+            if(index == 1){
+                tail.next = tail.next.next;
+            }
+            tail = tail.next;
+            index--;
+        }
+        return head;
+    }
+
+    /**
+     * 20. 有效的括号Valid Parentheses
+     */
+    @Override
+    public boolean isValid(String s) {
+        int n = s.length();
+        if(n % 2 == 1){
+            return false;
+        }
+        Map<Character, Character> pairs = new HashMap<>();
+        pairs.put(')', '(');
+        pairs.put(']', '[');
+        pairs.put('}', '{');
+        Deque<Character> stack = new LinkedList<>();
+        for(int i = 0; i < n; ++i){
+            char ch = s.charAt(i);
+            if (pairs.containsKey(ch)) {
+                if(stack.isEmpty() || stack.peek() != pairs.get(ch)){
+                    return false;
+                }
+                stack.pop();
+            }else {
+                stack.push(ch);
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    /**
+     * 21. 合并两个有序链表Merge Two Sorted Lists
+     */
+    @Override
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode preHead = new ListNode(-1);
+        ListNode tail = preHead;
+
+        while(list1 != null && list2 != null){
+            if(list1.val <= list2.val){
+                tail.next = list1;
+                list1 = list1.next;
+            }else {
+                tail.next = list2;
+                list2 = list2.next;
+            }
+            tail = tail.next;
+        }
+        tail.next = list1 == null ? list2 :list1;
+        return preHead.next;
+    }
+
+    /**
+     *22. 括号生成 Generate Parentheses
+     * 做法：括号当作一个整体，不断进行插入n对
+     */
+    @Override
+    public List<String> generateParenthesis(int n) {
+        if(n == 1){
+            return Arrays.asList("()");
+        }
+        Set<String> set = new HashSet<>();
+        for(String str : generateParenthesis(n - 1)){
+            for(int i = 0; i <= str.length() / 2; ++i){
+                set.add(str.substring(0, i) + "()" + str.substring(i, str.length()));
+            }
+        }
+        return new ArrayList<>(set);
+    }
 }
