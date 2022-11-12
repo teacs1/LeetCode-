@@ -81,5 +81,13 @@ public interface Solution {
      */
     public List<String> generateParenthesis(int n);
 
+    /**
+     * 23. 合并K个升序链表Merge k Sorted Lists
+     */
+    public ListNode mergeKLists(ListNode[] lists);
 
+    /**
+     * 31. 下一个排列Next Permutation
+     */
+    public void nextPermutation(int[] nums);
 }

@@ -369,4 +369,78 @@ public class SolutionImpl implements Solution {
         }
         return new ArrayList<>(set);
     }
+
+    /**
+     * 23. 合并K个升序链表Merge k Sorted Lists
+     */
+    @Override
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists == null){
+            return null;
+        }
+        int len = lists.length;
+        ListNode ans = null;
+        for(int i = 0; i < len; i++){
+            ans = merge2Lists(ans, lists[i]);
+        }
+        return ans;
+    }
+    private ListNode merge2Lists(ListNode a, ListNode b){
+        if(a == null || b == null){
+            return a != null ? a : b;
+        }
+        ListNode preHead = new ListNode(-1);
+        ListNode tail = preHead;
+        while(a != null && b != null){
+            if(a.val < b.val){
+                tail.next = a;
+                a = a.next;
+            }else {
+                tail.next = b;
+                b = b.next;
+            }
+            tail = tail.next;
+        }
+        tail.next = (a != null ? a : b);
+        return preHead.next;
+    }
+
+    /**
+     * 31. 下一个排列Next Permutation
+     */
+    @Override
+    public void nextPermutation(int[] nums) {
+        int len = nums.length;
+        int temp = 0;
+        for(int i = len - 1; i > 0; i--){   //从右往左找
+            if(nums[i - 1] < nums[i]){      //找到最左边交换位置 i-1
+
+            }
+        }
+        int i = len - 2;
+        while(i >= 0 && nums[i] > nums[i + 1]){
+            i--;
+        }
+        if(i >= 0){
+            int j = len - 1;
+            while(j >= 0 && nums[i] >= nums[j]){
+                j--;
+            }
+            swap31(nums, i, j);
+        }
+        reverse31(nums, i+1);
+    }
+    private void swap31(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    public void reverse31(int[] nums, int start) {
+        int left = start, right = nums.length - 1;
+        while (left < right) {
+            swap31(nums, left, right);
+            left++;
+            right--;
+        }
+    }
 }

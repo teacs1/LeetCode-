@@ -320,4 +320,90 @@ public class Test100 {
         strings = solution.generateParenthesis(n);
         System.out.println("[\"()\"]" + "<==>" + strings);
     }
+
+    /**
+     * 23. 合并K个升序链表Merge k Sorted Lists
+     */
+    @Test
+    public void problem023(){
+        //示例1
+        ListNode[] lists1 = {new ListNode(1, new ListNode(4, new ListNode(5))),
+                new ListNode(1, new ListNode(3, new ListNode(4))),
+                new ListNode(2, new ListNode(6))};
+        ListNode listNode = solution.mergeKLists(lists1);
+        while(listNode != null){
+            System.out.print("==>" + listNode.val);
+            listNode = listNode.next;
+        }
+        System.out.println();
+
+        //示例2
+        ListNode[] lists2 = null;
+        listNode = solution.mergeKLists(lists2);
+        while(listNode != null){
+            System.out.print("==>" + listNode.val);
+            listNode = listNode.next;
+        }
+        System.out.println();
+
+        //示例3
+        ListNode[] lists3 = {null};
+        listNode = solution.mergeKLists(lists3);
+        while(listNode != null){
+            System.out.print("==>" + listNode.val);
+            listNode = listNode.next;
+        }
+        System.out.println();
+    }
+
+    /**
+     * 31. 下一个排列Next Permutation
+     */
+    @Test
+    public void problem031(){
+        //示例1
+        int[] nums1 = {1, 2, 3};
+        solution.nextPermutation(nums1);
+        System.out.print("预期：132结果：");
+        for(int i = 0; i < nums1.length; i++){
+            System.out.print(nums1[i]);
+        }
+        System.out.println();
+
+        //示例2
+        int[] nums2 = {3, 2, 1};
+        solution.nextPermutation(nums2);
+        System.out.print("预期：123结果：");
+        for(int i = 0; i < nums2.length; i++){
+            System.out.print(nums2[i]);
+        }
+        System.out.println();
+
+        //示例3
+        int[] nums3 = {1, 1, 5};
+        solution.nextPermutation(nums3);
+        System.out.print("预期：151结果：");
+        for(int i = 0; i < nums3.length; i++){
+            System.out.print(nums3[i]);
+        }
+        System.out.println();
+
+        //示例4
+        int[] nums4 = {1, 3, 2};
+        solution.nextPermutation(nums4);
+        System.out.print("预期：213结果：");
+        for(int i = 0; i < nums4.length; i++){
+            System.out.print(nums4[i]);
+        }
+        System.out.println();
+
+        //示例5
+        int[] nums5 = {2, 3, 1};
+        solution.nextPermutation(nums5);
+        System.out.print("预期：312结果：");
+        for(int i = 0; i < nums5.length; i++){
+            System.out.print(nums5[i]);
+        }
+        System.out.println();
+    }
 }
