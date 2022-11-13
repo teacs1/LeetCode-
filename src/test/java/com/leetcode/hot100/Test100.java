@@ -406,4 +406,25 @@ public class Test100 {
         }
         System.out.println();
     }
+
+    //32. 最长有效括号
+    @Test
+    public void problem032(){
+        //示例1
+        String s = "(()";
+        int i = solution.longestValidParentheses(s);
+        System.out.println("预期结果：2，实际结果：" + i);
+
+        //示例2
+        s = ")()())";
+        i = solution.longestValidParentheses(s);
+        System.out.println("预期结果：4，实际结果：" + i);
+
+        //示例3
+        s = "";
+        i = solution.longestValidParentheses(s);
+        System.out.println("预期结果：0，实际结果：" + i);
+    }
+
+
 }

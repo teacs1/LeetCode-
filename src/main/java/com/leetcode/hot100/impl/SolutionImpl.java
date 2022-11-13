@@ -8,6 +8,10 @@ import java.util.*;
 
 @Component
 public class SolutionImpl implements Solution {
+
+    /**
+     * 题目1：两数之和
+     */
     public int[] twoSum(int[] nums, int target) {
         for(int i = 0; i < nums.length; i++){
             for(int j = i+1; j < nums.length; j++){
@@ -442,5 +446,30 @@ public class SolutionImpl implements Solution {
             left++;
             right--;
         }
+    }
+
+    /**
+     *32. 最长有效括号
+     *
+     * 动态规划
+     */
+    @Override
+    public int longestValidParentheses(String s) {
+        int len = s.length();
+        int maxAns = 0;
+        int dp[] = new int[len];
+        for(int i = 1; i < len; i++){
+            if(s.charAt(i) == ')'){
+                if(s.charAt(i - 1) == '('){
+                    //对应情况(),()() ==> )
+                    dp[i] = (i >= 2 ? dp[i - 2] : 0) + 2;
+                } else if(i - dp[i - 1] > 0 && s.charAt(i - dp[i - 1] - 1) == '('){
+                    //对应情况 (()),((())),(()()) ==> ))
+                    dp[i] = dp[i - 1] + 2 + (i - dp[i - 1] >= 2 ? dp[i -1 - dp[i-1] - 1] : 0);
+                }
+                maxAns = Math.max(maxAns, dp[i]);
+            }
+        }
+        return maxAns;
     }
 }

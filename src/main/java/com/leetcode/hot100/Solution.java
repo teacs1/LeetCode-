@@ -8,9 +8,6 @@ import java.util.List;
 public interface Solution {
     /**
      * 题目1：两数之和
-     * @param nums
-     * @param target
-     * @return
      */
     public int[] twoSum(int[] nums, int target);
 
@@ -90,4 +87,7 @@ public interface Solution {
      * 31. 下一个排列Next Permutation
      */
     public void nextPermutation(int[] nums);
+
+    //32. 最长有效括号
+    public int longestValidParentheses(String s);
 }
