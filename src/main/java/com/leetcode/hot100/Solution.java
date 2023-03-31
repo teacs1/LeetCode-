@@ -25,6 +25,7 @@ public interface Solution {
      * @return
      */
     public int lengthOfLongestSubstring(String s);
+    public String[] lengthOfLongestSubstringReturnString(String input);
 
     /**
      * 题目4. 寻找两个正序数组的中位数
@@ -90,4 +91,28 @@ public interface Solution {
 
     //32. 最长有效括号
     public int longestValidParentheses(String s);
+
+    // 33. 搜索旋转排序数组
+    public int search(int[] nums, int target);
+
+    // 34. 在排序数组中查找元素的第一个和最后一个位置
+    public int[] searchRange(int[] nums, int target);
+
+    // 39. 组合总和
+
+    /**
+     * 回溯算法 + 剪枝
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target);
+
+    /**
+     * 42. 接雨水
+     *  1.按行计算, 2.案列计算 3.动态规划, 4.双指针, 5.栈
+     * @param height
+     * @return
+     */
+    public int trap(int[] height);
 }

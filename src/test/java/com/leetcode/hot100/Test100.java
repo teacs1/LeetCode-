@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -95,6 +96,45 @@ public class Test100 {
         s = "pwwkew";
         length = solution.lengthOfLongestSubstring(s);
         System.out.println("示例3：" + length);
+
+        //示例4
+        s = "abcdefcwvuxyz";
+        length = solution.lengthOfLongestSubstring(s);
+        System.out.println("示例4：" + length);
+    }
+    @Test
+    public void problem003_1(){
+        //示例1
+        String s = "abcabcbb";
+        String[] strings = solution.lengthOfLongestSubstringReturnString(s);
+        System.out.println("预期:" + "abc,bca,cab,abc,");
+        for(String s1:strings){
+            System.out.print(s1+",");
+        }
+
+        //示例2
+        s = "bbbbb";
+        strings = solution.lengthOfLongestSubstringReturnString(s);
+        System.out.println("预期:" + "b,");
+        for(String s1:strings){
+            System.out.print(s1+",");
+        }
+
+        //示例3
+        s = "pwwkew";
+        strings = solution.lengthOfLongestSubstringReturnString(s);
+        System.out.println();
+        for(String s1:strings){
+            System.out.print(s1+",");
+        }
+
+        //示例4
+        s = "abcdefcwvuxyz";
+        strings = solution.lengthOfLongestSubstringReturnString(s);
+        System.out.println();
+        for(String s1:strings){
+            System.out.print(s1+",");
+        }
     }
 
     /**
@@ -426,5 +466,71 @@ public class Test100 {
         System.out.println("预期结果：0，实际结果：" + i);
     }
 
+    //33. 搜索旋转排序数组
+    @Test
+    public void problem033(){
+        // 示例1  nums = [4,5,6,7,0,1,2], target = 0
+        int[] nums = {4,5,6,7,0,1,2}; int target = 0, result = 4;
+        int search = solution.search(nums, target);
+        System.out.println("预期结果：" + result + "，实际结果：" + search);
+
+        // 示例2  nums = [4,5,6,7,0,1,2], target = 3
+        target = 3; result = -1;
+        search = solution.search(nums, target);
+        System.out.println("预期结果：" + result + "，实际结果：" + search);
+    }
+
+    //34. 在排序数组中查找元素的第一个和最后一个位置
+    @Test
+    public void problem034(){
+        //示例 1：输入：nums = [5,7,7,8,8,10], target = 8; 输出：[3,4]
+        int[] nums1 = {5,7,7,8,8,10};
+        int target = 8;
+        int[] result1 = solution.searchRange(nums1, target);
+        System.out.println("预期结果：[3,4]，实际结果：" + Arrays.toString(result1));
+        //示例 2：输入：nums = [5,7,7,8,8,10], target = 6; 输出：[-1,-1]
+        int[] nums2 = {5,7,7,8,8,10};
+        target = 6;
+        int[] result2 = solution.searchRange(nums1, target);
+        System.out.println("预期结果：[-1,-1]，实际结果：" + Arrays.toString(result2));
+        //示例 3：输入：nums = [], target = 0; 输出：[-1,-1]
+        int[] nums3 = {};
+        target = 0;
+        int[] result3 = solution.searchRange(nums1, target);
+        System.out.println("预期结果：[-1,-1]，实际结果：" + Arrays.toString(result3));
+    }
+
+    @Test
+    public void problem039(){
+        // 示例1 输入：candidates = [2,3,6,7], target = 7;输出：[[2,2,3],[7]]
+        int[] candidates1 = {2,3,6,7};
+        int target = 7;
+        List<List<Integer>> lists1 = solution.combinationSum(candidates1, target);
+        System.out.println("预期结果：[[2,2,3],[7]]，实际结果：" + lists1.toString());
+
+        //示例 2：输入: candidates = [2,3,5], target = 8;输出: [[2,2,2,2],[2,3,3],[3,5]]
+        int[] candidates2 = {2,3,5};
+        target = 8;
+        List<List<Integer>> lists2 = solution.combinationSum(candidates2, target);
+        System.out.println("预期结果：[[2,2,2,2],[2,3,3],[3,5]]，实际结果：" + lists2.toString());
+        //示例 3：输入: candidates = [2], target = 1 ;输出: []
+        int[] candidates3 = {2};
+        target = 1;
+        List<List<Integer>> lists3 = solution.combinationSum(candidates3, target);
+        System.out.println("预期结果：[]，实际结果：" + lists3.toString());
+    }
+
+    @Test
+    public void problem042(){
+        // 示例1: 输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]; 输出：6
+//        int[] height1 = {0,1,0,2,1,0,1,3,2,1,2,1};
+//        int res = solution.trap(height1);
+//        System.out.println("预期结果：6，实际结果：" + res);
+
+        // 示例2: 输入：height = [4,2,0,3,2,5]; 输出：9
+        int[] height2 = {4,2,0,3,2,5};
+        int res = solution.trap(height2);
+        System.out.println("预期结果：9，实际结果：" + res);
+    }
 
 }

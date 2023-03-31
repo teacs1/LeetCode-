@@ -13,12 +13,23 @@ public class SolutionImpl implements Solution {
      * 题目1：两数之和
      */
     public int[] twoSum(int[] nums, int target) {
-        for(int i = 0; i < nums.length; i++){
-            for(int j = i+1; j < nums.length; j++){
-                if(nums[i] + nums[j] == target){
-                    return new int[]{i,j};
-                }
+        // 1.暴力求解
+//        for(int i = 0; i < nums.length; i++){
+//            for(int j = i+1; j < nums.length; j++){
+//                if(nums[i] + nums[j] == target){
+//                    return new int[]{i,j};
+//                }
+//            }
+//        }
+//        return new int[0];
+        // 2.哈希映射
+        int len = nums.length;
+        Map<Integer, Integer> hashTable = new HashMap<>();
+        for(int i = 0; i < len; i++){
+            if(hashTable.containsKey(target - nums[i])){
+                return new int[] {i, hashTable.get(target - nums[i])};
             }
+            hashTable.put(nums[i], i);
         }
         return new int[0];
     }
@@ -66,6 +77,7 @@ public class SolutionImpl implements Solution {
     public int lengthOfLongestSubstring(String s) {
         //设置不重复字符集合
         Set<Character> charNotRepet = new HashSet<Character>();
+        //Map<Character, Integer> map = new HashMap();
         int n = s.length();
         //右指针-1未开始滑动,最大长度
         int rp = -1, length = 0;
@@ -82,6 +94,98 @@ public class SolutionImpl implements Solution {
             length = Math.max(length,rp - i +1);
         }
         return length;
+    }
+
+    /**
+     * 返回最长的子串
+     * @param
+     * @return
+     */
+/*    public String[] lengthOfLongestSubstringReturnString(String input) {
+        //设置不重复字符集合
+        Set<Character> charNotRepet = new HashSet<Character>();
+        Set<String> strings = new HashSet<>();
+        int n = input.length();
+        //右指针-1未开始滑动,最大长度
+        int rp = 0, length = 0;
+        //左指针i
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = 0; i < n; ++i){
+            //下一个右指针不超出边界&&当前右指针不重复
+            while(rp < n && !charNotRepet.contains(input.charAt(rp))){
+                //不断右移指针，往集合添加字符
+                charNotRepet.add(input.charAt(rp));
+                //得到一个不重复串
+                stringBuilder.append(input.charAt(rp));
+                rp++;
+            }
+            //下一个右指针字符与左指针重复，剔除左指针元素
+            charNotRepet.remove(input.charAt(i));
+            //向list中添加最长字符串
+            if (rp - i >= length){
+                strings.add(stringBuilder.toString());
+            }
+            stringBuilder.deleteCharAt(0);
+            length = Math.max(length,rp - i);
+        }
+        String[] ans = new String[strings.size()];
+        int i = 0;
+        for(String s:strings){
+            if(s.length() == length){
+                ans[i] = s;
+                i++;
+            }
+        }
+        return ans;
+    }*/
+    public String[] lengthOfLongestSubstringReturnString(String s) {
+        //判断输入是否合法
+        if(s == null || s.length() == 0){
+            return new String[0];
+        }
+        //定义一个哈希表存储字符和对应的位置
+        HashMap<Character,Integer> map = new HashMap<>();
+        //定义最大长度和子串的起始位置
+        Set<Integer> set = new HashSet<>();
+
+        set.iterator().next();int x = 1;
+        int max = 0;
+        int start = 0;
+        //定义一个ArrayList存储所有不重复子串
+        ArrayList<String> list = new ArrayList<>();
+        //遍历字符串
+        for(int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            //如果字符已经在哈希表中出现过，并且出现的位置在当前子串的起始位置之后
+            if(map.containsKey(c) && map.get(c) >= start){
+                //更新子串的起始位置为重复字符的下一个位置
+                start = map.get(c) + 1;
+            }
+            //否则更新最大长度和哈希表中字符的位置，并把对应的子串加入到list中
+            //else{
+                int cur = i - start + 1;
+                if(cur > max){
+                    list.clear();
+                    max = cur;
+                }
+                if(cur == max){
+                    list.add(s.substring(start,start+max));
+                }
+            //}
+            map.put(c,i);
+        }
+        //遍历list中的每个子串
+        for(int i = 0; i < list.size(); i++){
+            //如果子串的长度不等于max
+            if(list.get(i).length() != max){
+                //从list中移除该子串
+                list.remove(i);
+                //更新索引值
+                i--;
+            }
+        }
+        //把list转换成数组并返回
+        return list.toArray(new String[list.size()]);
     }
 
     /**
@@ -201,7 +305,7 @@ public class SolutionImpl implements Solution {
     @Override
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
-        List<List<Integer>> lists = new ArrayList<List<Integer>>();
+        List<List<Integer>> lists = new ArrayList();
         int len = nums.length;
         for(int left = 0; left < len; ++left){
             if(nums[left] > 0){
@@ -214,6 +318,7 @@ public class SolutionImpl implements Solution {
             while (center < right) {
                 int temp = nums[left] + nums[center] + nums[right];
                 if(temp == 0){
+                    //lists.add(Arrays.asList(nums[left], nums[center], nums[right]));
                     List<Integer> integers = new ArrayList<>();
                     integers.add(nums[left]);
                     integers.add(nums[center]);
@@ -471,5 +576,177 @@ public class SolutionImpl implements Solution {
             }
         }
         return maxAns;
+    }
+
+    /**
+     * 33. 搜索旋转排序数组
+     *    两种情况,目标值大于等于首元素,或者目标值小于首元素
+     *       1.大于等于首元素,一直比较到旋转出
+     *       2.小于,则从尾部开始比较
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int search(int[] nums, int target) {
+        int length = nums.length;
+        if(length == 0){
+            return -1;
+        }
+        if(length == 1){
+            return nums[0] == target ? 0 : -1;
+        }
+        // 判断目标值是否大于等于nums[0]
+        if(target >= nums[0]){
+            for(int i = 0; i < length; i++){
+                if(target == nums[i]){
+                    return i;
+                }
+                if(nums[0] > nums[i]) return -1;
+            }
+        } else{
+            for(int i = length - 1; i > -1; i--){
+                if(target == nums[i]){
+                    return i;
+                }
+                if(nums[i] > nums[length - 1]) return -1;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 34. 在排序数组中查找元素的第一个和最后一个位置
+     * 使用二分查找
+     * @param nums
+     * @param target
+     * @return
+     */
+    @Override
+    public int[] searchRange(int[] nums, int target) {
+        if(nums == null || nums.length == 0){
+            return new int[] {-1, -1};
+        }
+        int length = nums.length, left = 0, right = length - 1, min = -1, max = -1;
+        if(target > nums[length - 1] || target < nums[0]) return new int[] {-1, -1};
+        while(left <= right){
+            int mid = (left + right) / 2;
+            if(nums[mid] < target){
+                left = mid + 1;
+            }else {
+                min = mid;
+                right = mid - 1;
+            }
+        }
+        if(nums[min] != target) return new int[] {-1, -1};
+        else {
+            max = min;
+            while(max < length){
+                max++;
+                if(max < length && nums[max] != target) break;
+            }
+        }
+        return new int[] {min, max - 1};
+    }
+
+    /**
+     * 39. 组合总和
+     *
+     *      回溯算法 + 剪枝
+     *
+     * @param candidates
+     * @param target
+     * @return
+     */
+    @Override
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        int len = candidates.length;
+        List<List<Integer>> res = new ArrayList<>();
+        if(len == 0){
+            return  res;
+        }
+        // 排序,准备剪枝,无序的话剪枝时可能把减去了大的，而忽略了小的
+        Arrays.sort(candidates);
+        Deque<Integer> path = new ArrayDeque<>();
+        combinationSumDfs(candidates, 0, len, target, path, res);
+        return res;
+    }
+    /**
+     * 深度优先算法
+     * @param candidates    候选数组
+     * @param begin         搜索起点
+     * @param len           冗余变量，是 candidates 里的属性，可以不传
+     * @param target        每减去一个元素，目标值变小
+     * @param path          从根结点到叶子结点的路径，是一个栈
+     * @param res           结果集列表
+     */
+    private void combinationSumDfs
+            (int[] candidates, int begin, int len, int target, Deque<Integer> path, List<List<Integer>> res){
+        if(target == 0){
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        // 从begin开始向下搜索,begin之前的是已经搜索的
+        for(int i = begin; i < len; i++){
+            if(target - candidates[i] < 0){
+                return;
+            }
+            path.addLast(candidates[i]);
+            combinationSumDfs(candidates, i, len, target - candidates[i], path, res);
+            path.removeLast();
+        }
+    }
+
+    /**
+     * 42. 接雨水
+     */
+    @Override
+    public int trap(int[] height) {
+        // 动态规划,提前预存位置i处两边的最高点
+/*        int sum = 0, len = height.length;
+        if(len < 2){
+            return sum;
+        }
+        int[] maxLeft = new int[len];
+        int[] maxRight = new int[len];
+        for(int i = 1; i < len - 1; i++){
+            maxLeft[i] = Math.max(maxLeft[i - 1], height[i - 1]);
+            maxRight[len - 1 - i] = Math.max(maxRight[len - i], height[len - i]);
+        }
+        for(int i = 1; i < len -1; i++){
+            int min = Math.min(maxLeft[i], maxRight[i]);
+            if(min > height[i]){
+                sum += min - height[i];
+            }
+        }
+        return sum;*/
+
+        // 栈,像存储括号一样存储,左右括号的距离就是存储的水
+        // 左括号入栈,右括号为当前位置,用于判断与最近左括号的距离
+        // 像右移动，记录当前最高点并入栈
+
+        int sum = 0, len = height.length;
+        if(len < 2){
+            return sum;
+        }
+        Stack<Integer> stack = new Stack<>();
+        int current = 0;
+        while(current < len){
+            //  若当前指针为符合要求的右括号,出栈(判断是否高于栈顶元素对应的高度)
+            while(!stack.isEmpty() && height[current] > height[stack.peek()]){
+                int h = height[stack.peek()];
+                stack.pop();
+                if(stack.isEmpty()){
+                    break;
+                }
+                int distance = current - stack.peek() - 1;
+                int min = Math.min(height[stack.peek()], height[current]);
+                sum += distance * (min - h);
+            }
+            // 当前墙入栈
+            stack.push(current);
+            // 指针向后移动
+            current++;
+        }
+        return sum;
     }
 }
